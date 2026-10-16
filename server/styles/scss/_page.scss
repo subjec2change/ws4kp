@@ -498,7 +498,13 @@ body {
 
 .kiosk {
 	#divTwc #divTwcBottom {
-		display: none;
+		display: flex;
+		visibility: visible;
+		opacity: 1;
+	}
+
+	#divTwc.no-cursor {
+		cursor: auto;
 	}
 }
 

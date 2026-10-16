@@ -3,8 +3,32 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.server
+      args:
+        - HTTP_PROXY
+        - HTTPS_PROXY
+        - NO_PROXY
+        - http_proxy
+        - https_proxy
+        - no_proxy
+      secrets:
+        - host_ca
     image: ws4kp-server
+    environment:
+      - HTTP_PROXY
+      - HTTPS_PROXY
+      - NO_PROXY
+      - http_proxy
+      - https_proxy
+      - no_proxy
+      - NODE_USE_ENV_PROXY=1
+      - NODE_EXTRA_CA_CERTS=/run/secrets/host_ca
+    secrets:
+      - host_ca
     ports:
       - "8080:8080"
     volumes:
       - "./server/music:/app/server/music"
+
+secrets:
+  host_ca:
+    file: ${HOST_CA_BUNDLE:-/etc/ssl/certs/ca-certificates.crt}

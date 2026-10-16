@@ -2,7 +2,8 @@ FROM node:24-alpine
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci --legacy-peer-deps --loglevel=verbose
+RUN --mount=type=secret,id=host_ca,required=true \
+	NODE_EXTRA_CA_CERTS=/run/secrets/host_ca npm ci --legacy-peer-deps --loglevel=verbose
 COPY . .
 
 RUN npm run build
